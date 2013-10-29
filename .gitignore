@@ -3,3 +3,7 @@
 *.R
 *.swp
 Ejemplos
+*.pyc
+log*
+*.bak
+*~

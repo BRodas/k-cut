@@ -1,0 +1,80 @@
+# K-Cut algorithm
+# A continuacion el algoritmo K-Cut
+
+# Se importan las librerias a usar
+# Esta libreria es la que tiene la rutina que calcula el corte minimo
+import Min_Cut_Kargers
+# Esta libreria crea una red
+import networkx as nx
+# Libreria matematica
+import math
+
+
+#################################################
+def K_Cut(arcos_con_pesos=[(1, 2, 70), (2, 4, 10), (3, 4, 105),
+                           (1, 3, 1)], porc_error=0.005):
+    """Funcion que calcula un K-Cut.
+
+    arcos_con_pesos, es un LISTADO de TUPLAS/LISTAS.
+    Ejemplo: [(nodo11, nodo12, dist1), (nodo21, nodo22, dist2), ...]
+
+    porc_error, es un decimal que indica cual es el error porcentual"""
+
+    #################################################
+    # La idea es armar en esta parte el grafo
+    # Se crea la instancia del GRAFO
+    G = nx.MultiGraph()
+    # Se agregan los arcos con peso, que en este caso son las distancias
+    # entre los vertices.
+    # El formato es (nodo_1,nodo_2, distancia_entre_nodos)
+    #G.add_weighted_edges_from()
+    G.add_weighted_edges_from(arcos_con_pesos)
+
+    #################################################
+    # Se resuelve el GRAFO INICIAL
+    num_arcos = len(G.edges())
+    numerador = math.log(porc_error)
+    factorial = (math.factorial(num_arcos)
+                 / (math.factorial(num_arcos - 2) * math.factorial(2)))
+    denominador = math.log(1 - float(1) / factorial)
+    # Con esto se calcula el numero de iteraciones
+    itera = int(numerador / denominador)
+
+    # En el siguiente diccionario se guardaran los grafos resultantes
+    # dado el arco inicial entregado.
+    listado_grafos = []
+    # Realizo una iteracion arco por arco
+    for arco in G.edges_iter():
+        # Calcula el min cut para CADA arco.
+        #print arco
+        Grafo_final, Suma_corte_minimo = Min_Cut_Kargers.min_cut(G,
+                                                                 itera,
+                                                                 arco)
+        Grafo_final.Suma_corte_minimo = Suma_corte_minimo
+        Grafo_final.arco_inicial = arco
+        listado_grafos.append(Grafo_final)
+
+    # Terminada la iteracion arco por arco, ordeno segun la suma del corte y en
+    # orden ascendente.
+    listado_grafos.sort(key=lambda x: x.Suma_corte_minimo, reverse=False)
+
+    import pdb
+    pdb.set_trace()  # XXX BREAKPOINT
+
+    # Lo que devuelve la funcion
+    return listado_grafos
+
+
+#################################################
+# El famoso main
+if __name__ == '__main__':
+
+    listado = [(1, 2, float(1)/70), (1, 3, float(1)/95), (1, 4, float(1)/105),
+               (1, 5, 83), (2, 3, 25), (2, 4, 35),
+               (2, 5, 13), (3, 4, 10), (3, 5, 14),
+               (4, 5, 24)]
+
+    error_porcentual = 0.005
+
+    # Lo que se quiera testear
+    resultado = K_Cut(listado, error_porcentual)

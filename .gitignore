@@ -7,3 +7,5 @@ Ejemplos
 log*
 *.bak
 *~
+log
+log_1

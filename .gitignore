@@ -1,0 +1,11 @@
+*.ods
+*.pdf
+*.R
+*.swp
+Ejemplos
+*.pyc
+log*
+*.bak
+*~
+log
+log_1

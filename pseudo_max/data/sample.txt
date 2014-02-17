@@ -1,0 +1,20 @@
+c Hola, esto es un comentario
+c Este archivo contiene un ejemplo de grafo, en formato DIMACS (para grafos)
+c FORMATO PARA LINEAS ES EL SIGUIENTE
+c p par-max < # vertices > < # arcs > < # parameters >
+c n < source > s 
+c n < sink > t 
+c a < from-node > < to-node > < capacity >
+c a < source > < sink > < capacity > 
+c a < source > < to-node > < capacity1 > < capacity2 > < capacity3 > ... < capacityk >
+c a < from-node > < sink > < capacity1 > < capacity2 > < capacity3 > ... < capacityk >
+p par-max 4 6
+n 1 s
+n 3 t
+a 2 4 200
+a 1 3 100
+a 1 2 10 20 30 40 50 60 70 80 90
+a 1 4 11 21 31 41 51 61 71 81 91
+a 4 3 92 82 72 62 52 42 32 22 12
+a 2 3 93 83 73 63 53 43 33 23 13
+
